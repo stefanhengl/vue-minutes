@@ -9,8 +9,7 @@
 
 <body>
     <div id="app">
-            <lala id=1></lala>
-            <lala id=2></lala>
+            <lala v-for="item in items" :id="item.id"></lala>
             <div>{{texts}}</div>
     </div>
 </body>
