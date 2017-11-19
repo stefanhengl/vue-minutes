@@ -12,11 +12,11 @@ Vue.component('bubble', {
         <transition name="fade">
             <p v-if="show" class="timeStamp">{{stamp}}</p>
         </transition>
-        <div class="bubble">
-        <textarea @keydown="inputHandler" :id=id v-model="msg"></textarea>
-        <div class="timeOfDay">
-        {{timeOfDay}}
-        </div>
+        <div v-bind:class="{ bubble: true, foc: isFocused }">
+            <textarea @keydown="inputHandler" :id=id v-model="msg"></textarea>
+            <div class="timeOfDay">
+                {{timeOfDay}}
+            </div>
         </div>
     </div>
     `,
@@ -27,7 +27,8 @@ Vue.component('bubble', {
             id_: this.id,
             stamp: "",
             show: false,
-            timeOfDay: ""
+            timeOfDay: "",
+            isFocused: true,
         }
     },
     methods: {
@@ -39,6 +40,7 @@ Vue.component('bubble', {
                 this.show = true;
                 app.$emit('newField', this.id_)
                 var k = parseInt(this.id_) + 1
+                this.isFocused = false;
                 Vue.nextTick(function () {
                     console.log("setting focus", k)
                     document.getElementById(k).focus()

@@ -20,6 +20,11 @@
     background: #d5ffe3
 }
 
+.foc {
+    background: transparent;
+    border: 1px solid darkgray;
+}
+
 .timeOfDay {
     position: absolute;
     bottom: 7px;
