@@ -1,7 +1,7 @@
 require('vue');
 
 Vue.component('lala', {
-    template: '<textarea @keydown="inputHandler"  key="doe" value="doe" v-model="msg"></textarea>',
+    template: '<textarea @keydown="inputHandler" :id=id v-model="msg"></textarea>',
     props: ['id'],
     data: function() {
         return {
@@ -13,11 +13,12 @@ Vue.component('lala', {
             console.log(e.keyCode)
             if ((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
                 console.log("command shift")
-                app.$emit('newField')
+                this.submitForm();
+                app.$emit('newField', this.id_)
             }
             else if (e.keyCode === 13) {
                 e.preventDefault();
-                this.submitForm();
+                
             }
         },
         submitForm() {
@@ -42,9 +43,12 @@ app = new Vue({
             console.log('Event from parent component emitted', msg, id)
             this.texts = Object.assign({}, this.texts, {[id]: msg})
         });
-        this.$on('newField', function() {
+        this.$on('newField', function(id) {
             console.log("adding new field")
-            this.items = immutablePush(this.items, {id:this.items.length +1})
+            let numberOfFields = this.items.length
+            if (parseInt(id) === numberOfFields) {
+                this.items = immutablePush(this.items, {id:numberOfFields +1})
+            }
         })
 	},
 
