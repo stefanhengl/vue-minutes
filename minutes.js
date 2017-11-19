@@ -7,11 +7,16 @@ function immutablePush(arr, newEntry) {
 
 Vue.component('bubble', {
     template: `
-    <div>
+    <div class="bubbleContainer">
         <transition name="fade">
             <p v-if="show" class="timeStamp">{{stamp}}</p>
         </transition>
-        <textarea class="bubble" @keydown="inputHandler" :id=id v-model="msg"></textarea>
+        <div class="bubble">
+            <textarea @keydown="inputHandler" :id=id v-model="msg"></textarea>
+            <div class="timeOfDay">
+                {{timeOfDay}}
+            </div>
+        </div>
     </div>
     `,
     props: ['id'],
@@ -20,7 +25,8 @@ Vue.component('bubble', {
             msg: "",
             id_: this.id,
             stamp: "",
-            show: false
+            show: false,
+            timeOfDay: ""
         }
     },
     methods: {
@@ -42,7 +48,8 @@ Vue.component('bubble', {
             console.log("submit form")
             app.$emit('submitContent', this.msg, this.id_)
             var now = new Date();
-            this.stamp = dateFormat(now, "dddd, mmmm dS, yyyy, h:MM:ss TT");
+            this.stamp = dateFormat(now, "dddd, mmmm dS");
+            this.timeOfDay = dateFormat(now, "hh:MM TT")
         },
     }
 })
