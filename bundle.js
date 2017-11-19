@@ -18,7 +18,7 @@ Vue.component('lala', {
                 app.$emit('newField', this.id_)
             }
             else if (e.keyCode === 13) {
-                e.preventDefault();
+                // e.preventDefault();
                 
             }
         },
