@@ -10,7 +10,12 @@
     margin: 10px;
     padding: 8px;
     font-size: 16px;
+    font-family: 'Roboto', sans-serif;
     border: solid 2px #33d16b;
+}
+
+.bubble:focus {
+    border: solid 4px rgb(73, 164, 194);
 }
 
 textarea {
@@ -19,3 +24,18 @@ textarea {
     overflow: hidden;
   }
 
+.timeStamp {
+    margin: 0;
+    font-size: small;
+    margin-right: 10px;
+    margin-top: 16px;
+    text-align: right;
+    font-family: 'Roboto', sans-serif;
+}
+
+.fade-enter-active, .fade-leave-active {
+    transition: opacity .5s
+  }
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+    opacity: 0
+  }

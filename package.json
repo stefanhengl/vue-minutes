@@ -1,9 +1,10 @@
 {
-  "name": "vue_hw",
-  "version": "1.0.0",
-  "description": "vue hello world",
+  "name": "vue-minutes",
+  "version": "0.0.1",
+  "description": "A vue.js chat-app in progres",
   "main": "index.js",
   "dependencies": {
+    "dateformat": "^3.0.2",
     "vue": "^2.5.3"
   },
   "devDependencies": {},

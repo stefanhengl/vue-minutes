@@ -4,13 +4,14 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
     <title>Vue Test</title>
     <script src="https://cdn.jsdelivr.net/vue/latest/vue.js"></script>
 </head>
 
 <body>
     <div id="app" class="container">
-            <lala v-for="item in items" :id="item.id" class="bubble"></lala>
+            <bubble v-for="item in items" :id="item.id"></bubble>
             <div>{{texts}}</div>
     </div>
 </body>
