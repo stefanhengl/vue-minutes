@@ -16,6 +16,11 @@ Vue.component('lala', {
                 console.log("command shift")
                 this.submitForm();
                 app.$emit('newField', this.id_)
+                var k = parseInt(this.id_)+1
+                Vue.nextTick(function () {
+                    console.log("setting focus", k)
+                    document.getElementById(k).focus()
+                    })
             }
             else if (e.keyCode === 13) {
                 // e.preventDefault();
@@ -25,7 +30,7 @@ Vue.component('lala', {
         submitForm() {
             console.log("submit form")                
             app.$emit('subsub', this.msg, this.id_)
-        }
+        },
       }
 })
 
@@ -42,7 +47,7 @@ app = new Vue({
 	created() {
 		this.$on('subsub', function(msg, id){
             console.log('Event from parent component emitted', msg, id)
-            this.texts = Object.assign({}, this.texts, {[id]: msg})
+            this.texts = Object.assign({}, this.texts, {[id]: msg + " (" + Date()+ ")"})
         });
         this.$on('newField', function(id) {
             console.log("adding new field")
