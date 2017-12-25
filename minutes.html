@@ -11,7 +11,7 @@
 
 <body>
     <div id="app" class="container">
-            <bubble v-for="item in items" :id="item.id"></bubble>
+            <bubble v-for="item in items" :id="item.id" :lastknowndate="date"></bubble>
             <div>{{texts}}</div>
     </div>
 </body>

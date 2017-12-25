@@ -20,7 +20,7 @@ Vue.component('bubble', {
         </div>
     </div>
     `,
-    props: ['id'],
+    props: ['id', 'lastknowndate'],
     data: function () {
         return {
             msg: "",
@@ -29,16 +29,19 @@ Vue.component('bubble', {
             show: false,
             timeOfDay: "",
             isFocused: true,
+            lastKnownDate_: this.lastknowndate,
         }
     },
     methods: {
         inputHandler(e) {
-            console.log(e.keyCode)
+            // console.log(e.keyCode)
+            // Handle submit
             if ((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
                 console.log("command shift")
                 this.submitForm();
-                this.show = true;
                 app.$emit('newField', this.id_)
+            
+                // after a submit, the focus should change to the next element
                 var k = parseInt(this.id_) + 1
                 this.isFocused = false;
                 Vue.nextTick(function () {
@@ -51,8 +54,14 @@ Vue.component('bubble', {
             console.log("submit form")
             app.$emit('submitContent', this.msg, this.id_)
             var now = new Date();
-            this.stamp = dateFormat(now, "dddd, mmmm dS");
+            this.stamp = dateFormat(now, "dddd, mmmm dS, h TT");
             this.timeOfDay = dateFormat(now, "hh:MM TT")
+
+            // Display date on top of bubble on if hours has changed
+            if (this.lastKnownDate_ !== this.stamp) {
+                this.show = true;
+                app.$emit('rememberDate', this.stamp)
+            }
         },
     }
 })
@@ -62,7 +71,8 @@ app = new Vue({
     el: '#app',
     data: {
         texts: {},
-        items: [{ id: 1 }]
+        items: [{ id: 1 }],
+        date: ""
     },
     created() {
         this.$on('submitContent', function (msg, id) {
@@ -75,6 +85,10 @@ app = new Vue({
             if (parseInt(id) === numberOfFields) {
                 this.items = immutablePush(this.items, { id: numberOfFields + 1 })
             }
+        });
+        this.$on('rememberDate', function(date) {
+            console.log('remembering:', date)
+            this.date = date
         })
     },
 
