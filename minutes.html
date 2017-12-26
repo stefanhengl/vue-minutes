@@ -11,7 +11,10 @@
 
 <body>
     <div id="app" class="container">
-            <bubble v-for="(item, index) in texts" :text="item.message" :index="index" :time="item.time" :stamp="item.stamp" :show="item.show" :type="item.type"></bubble>
+            <bubble v-for="(item, index) in texts" 
+                :text="item.message" :index="index" :time="item.time" 
+                :stamp="item.stamp" :type="item.type">
+            </bubble>
             <input-field></input-field>
     </div>
 </body>
