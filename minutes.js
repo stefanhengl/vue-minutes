@@ -11,7 +11,7 @@ Vue.component('bubble', {
     <div v-if="type === 'bubble'" class="bubbleContainer">
         <div class="bubbleButtonContainer">
             <div class="bubble">
-                <div class="content" contenteditable=true @keydown="inputhandler">    
+                <div class="content">    
                     {{text}}
                 </div>
                 <div class="timeOfDay">
@@ -21,27 +21,20 @@ Vue.component('bubble', {
             <button class="deleteIcon" @click="deleteItem"></button>
         </div>
     </div>
-
-    <div v-else class="bubbleContainer">
+    <div  v-else class="headerContainer">
         <p v-if="show" class="timeStamp">{{stamp}}</p>
+        <button class="deleteIcon red" @click="deleteAll"></button>
     </div>
     `,
-    props: ['text', 'index', 'time', 'stamp', 'show', 'type'],
+    props: ['text', 'index', 'time', 'stamp', 'show', 'type', 'flag'],
     methods: {
         deleteItem() {
             app.$emit('deleteItem', this.index)
         },
-        inputhandler(e) {
-            console.log(e)
+        deleteAll() {
+            app.$emit('deleteAll', this.stamp)
         },
-        moveUp() {
-            app.$emit('moveUp', this.text, this.index, this.time, this.stamp, this.show)
-        },
-        moveDown() {
-            app.$emit('moveDown', this.text, this.index, this.time, this.stamp, this.show)
-        }
     }
-
 })
 
 Vue.component('input-field', {
@@ -82,7 +75,7 @@ app = new Vue({
             let stamp = dateFormat(now, "dddd, mmmm dS, h TT");
             let show = false
             if (this.lastKnowDate !== stamp) {
-                this.texts = immutablePush(this.texts, {message: msg, time: dateFormat(now, "hh:MM"), stamp: stamp, show: true, tpye: "header"})
+                this.texts = immutablePush(this.texts, {message: "", time: "", stamp: stamp, show: true, type: "header"})
                 this.lastKnowDate = stamp
             }
 
@@ -93,16 +86,15 @@ app = new Vue({
             console.log('delete item with index', index)
             Vue.delete(this.texts, index)
         });
-        this.$on('moveUp', function( text, index, time, stamp, show) {
-            console.log('moving', index)
-            this.texts.splice(index, 1);
-            this.texts.splice(index-1, 0, {message:text, time: time, stamp:stamp, show:show, index: index-1});
+        this.$on('deleteAll', function(stamp) {
+            for (var i = this.texts.length-1; i >=0; i--) {
+                console.log(i)
+                if (this.texts[i].stamp === stamp) {
+                    Vue.delete(this.texts, i)
+                }
+            }
+            this.lastKnowDate = ""
         });
-        this.$on('moveDown', function( text, index, time, stamp, show) {
-            console.log('moving', index)
-            this.texts.splice(index, 1);
-            this.texts.splice(index+1, 0, {message:text, time: time, stamp:stamp, show:show, index: index+1});
-        })
     },
 
 })

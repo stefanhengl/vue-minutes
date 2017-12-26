@@ -22,15 +22,26 @@ body {
 }
 
 .bubbleButtonContainer:hover .deleteIcon{
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.3s ease-out;
     opacity: 1;
 }
 
 .bubbleButtonContainer:hover .upAndDownButtons{
-    transition: opacity 0.5s ease-out;
+    transition: opacity 0.3s ease-out;
     opacity: 1;
 }
 
+.headerContainer {
+    margin-top: 16px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.headerContainer:hover .deleteIcon {
+    transition: opacity 0.3s ease-out;
+    opacity: 1;
+}
 
 .bubble {
     width: 500px;
@@ -46,6 +57,11 @@ body {
     position: relative;
     background: #d5ffe3;
     box-shadow: 1px 1px 1px 1px rgba(2, 2, 2, 0.2);
+}
+
+.flagged {
+    background:#ec8a68;
+    color: white;
 }
 
 .inputBubble {
@@ -95,7 +111,6 @@ textarea {
     margin: 0;
     font-size: x-small;
     margin-right: 10px;
-    margin-top: 16px;
     text-align: center;
     border-radius: 10px;
     border: transparent;
@@ -120,6 +135,10 @@ textarea {
     height: 24px;
     width: 24px;
     opacity: 0;
+}
+
+.red {
+    background-image: url('statics/ic_delete_red_24px.svg');
 }
 
 .upIcon {
