@@ -6,88 +6,94 @@ function immutablePush(arr, newEntry) {
 }
 
 Vue.component('bubble', {
-    template: `
+    template:
+    `
     <div class="bubbleContainer">
         <transition name="fade">
             <p v-if="show" class="timeStamp">{{stamp}}</p>
         </transition>
-        <div v-bind:class="{ bubble: true, foc: isFocused }">
-            <textarea @keydown="inputHandler" :id=id v-model="msg"></textarea>
-            <div class="timeOfDay">
-                {{timeOfDay}}
+        <div class="bubbleButtonContainer">
+            <div class="bubble">
+                <div class="content" contenteditable=true @keydown="inputhandler">    
+                    {{text}}
+                </div>
+                <div class="timeOfDay">
+                    {{time}}
+                </div>
             </div>
-        </div>
+            <button class="deleteIcon" @click="deleteItem"></button>
+            </div>
     </div>
     `,
-    props: ['id', 'lastknowndate'],
+    props: ['text', 'index', 'time', 'stamp', 'show'],
+    data: function() {
+        return {
+            text: this.text,
+            index: this.index,
+            time: this.time,
+            stamp: this.stamp,
+            show: this.show,
+        }
+    },
+    methods: {
+        deleteItem() {
+            app.$emit('deleteItem', this.index)
+        },
+        inputhandler(e) {
+            console.log(e)
+        }
+    }
+
+})
+
+Vue.component('input-field', {
+    template:
+    `
+    <textarea class="inputBubble" @keydown="inputHandler" v-model="msg" placeholder="Type something! Press ⌘ + Enter to commit."></textarea>
+    `,
     data: function () {
         return {
-            msg: "",
-            id_: this.id,
-            stamp: "",
-            show: false,
-            timeOfDay: "",
-            isFocused: true,
-            lastKnownDate_: this.lastknowndate,
+            msg: ""
         }
     },
     methods: {
         inputHandler(e) {
-            // console.log(e.keyCode)
-            // Handle submit
+            console.log(e.keyCode)
             if ((e.metaKey || e.ctrlKey) && e.keyCode == 13) {
-                console.log("command shift")
-                this.submitForm();
-                app.$emit('newField', this.id_)
-            
-                // after a submit, the focus should change to the next element
-                var k = parseInt(this.id_) + 1
-                this.isFocused = false;
-                Vue.nextTick(function () {
-                    console.log("setting focus", k)
-                    document.getElementById(k).focus()
-                })
+                if (this.msg === "") {
+                    return
+                }
+                app.$emit('submitContent', this.msg, -1)
+                this.msg = ""
             }
-        },
-        submitForm() {
-            console.log("submit form")
-            app.$emit('submitContent', this.msg, this.id_)
-            var now = new Date();
-            this.stamp = dateFormat(now, "dddd, mmmm dS, h TT");
-            this.timeOfDay = dateFormat(now, "hh:MM TT")
-
-            // Display date on top of bubble on if hours has changed
-            if (this.lastKnownDate_ !== this.stamp) {
-                this.show = true;
-                app.$emit('rememberDate', this.stamp)
-            }
-        },
-    }
+        }
+    },
 })
 
 
 app = new Vue({
     el: '#app',
     data: {
-        texts: {},
-        items: [{ id: 1 }],
-        date: ""
+        texts: [],
+        lastKnowDate: "",
     },
     created() {
         this.$on('submitContent', function (msg, id) {
             console.log('Event from parent component emitted', msg, id)
-            this.texts = Object.assign({}, this.texts, { [id]: msg })
-        });
-        this.$on('newField', function (id) {
-            console.log("adding new field")
-            let numberOfFields = this.items.length
-            if (parseInt(id) === numberOfFields) {
-                this.items = immutablePush(this.items, { id: numberOfFields + 1 })
+            let now = new Date();
+            let stamp = dateFormat(now, "dddd, mmmm dS, h TT");
+            let show = false
+            if (this.lastKnowDate !== stamp) {
+                show = true
+                this.lastKnowDate = stamp
             }
+
+            this.texts = immutablePush(this.texts, {message: msg, time: dateFormat(now, "hh:MM"), stamp: stamp, show: show})
+            console.log('this.texts', this.texts)
         });
-        this.$on('rememberDate', function(date) {
-            console.log('remembering:', date)
-            this.date = date
+        this.$on('deleteItem', function(index) {
+            console.log('delete item with index', index)
+            Vue.delete(this.texts, index)
         })
     },
 

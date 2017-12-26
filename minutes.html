@@ -11,8 +11,8 @@
 
 <body>
     <div id="app" class="container">
-            <bubble v-for="item in items" :id="item.id" :lastknowndate="date"></bubble>
-            <div>{{texts}}</div>
+            <bubble v-for="(item, index) in texts" :text="item.message" :index="index" :time="item.time" :stamp="item.stamp" :show="item.show"></bubble>
+            <input-field></input-field>
     </div>
 </body>
 </html>
