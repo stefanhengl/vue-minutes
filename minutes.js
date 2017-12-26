@@ -21,8 +21,12 @@ Vue.component('bubble', {
                     {{time}}
                 </div>
             </div>
-            <button class="deleteIcon" @click="deleteItem"></button>
+            <div class="upAndDownButtons">
+                <button class="upIcon" @click="moveUp"></button>
+                <button class="downIcon" @click="moveDown"></button>
             </div>
+            <button class="deleteIcon" @click="deleteItem"></button>
+        </div>
     </div>
     `,
     props: ['text', 'index', 'time', 'stamp', 'show'],
@@ -41,6 +45,12 @@ Vue.component('bubble', {
         },
         inputhandler(e) {
             console.log(e)
+        },
+        moveUp() {
+            app.$emit('moveUp', this.text, this.index, this.time, this.stamp, this.show)
+        },
+        moveDown() {
+            app.$emit('moveDown', this.text, this.index, this.time, this.stamp, this.show)
         }
     }
 
@@ -94,6 +104,16 @@ app = new Vue({
         this.$on('deleteItem', function(index) {
             console.log('delete item with index', index)
             Vue.delete(this.texts, index)
+        });
+        this.$on('moveUp', function( text, index, time, stamp, show) {
+            console.log('moving', index)
+            this.texts.splice(index, 1);
+            this.texts.splice(index-1, 0, {message:text, time: time, stamp:stamp, show:show, index: index-1});
+        });
+        this.$on('moveDown', function( text, index, time, stamp, show) {
+            console.log('moving', index)
+            this.texts.splice(index, 1);
+            this.texts.splice(index+1, 0, {message:text, time: time, stamp:stamp, show:show, index: index+1});
         })
     },
 
