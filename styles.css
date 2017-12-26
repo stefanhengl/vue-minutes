@@ -1,5 +1,6 @@
 body {
-    background: rgb(240, 240, 240);
+    background: url('statics/background.png');
+    background-size: 500px;
 }
 
 .container {
