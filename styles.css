@@ -6,8 +6,9 @@ body {
 .container {
     display: flex;
     flex-direction: column;
-    align-items: left;
-    margin-left: calc(50% - 260px)
+    align-items: center;
+    margin-left: calc(50% - 300px);
+    width: 600px;
 }
 
 .bubbleButtonContainer {
@@ -58,6 +59,7 @@ body {
     box-sizing: border-box;
     background: white;
     height: 4em;
+    margin-right: 34px;
 }
 
 .foc {

@@ -8,10 +8,7 @@ function immutablePush(arr, newEntry) {
 Vue.component('bubble', {
     template:
     `
-    <div class="bubbleContainer">
-        <transition name="fade">
-            <p v-if="show" class="timeStamp">{{stamp}}</p>
-        </transition>
+    <div v-if="type === 'bubble'" class="bubbleContainer">
         <div class="bubbleButtonContainer">
             <div class="bubble">
                 <div class="content" contenteditable=true @keydown="inputhandler">    
@@ -21,24 +18,15 @@ Vue.component('bubble', {
                     {{time}}
                 </div>
             </div>
-            <div class="upAndDownButtons">
-                <button class="upIcon" @click="moveUp"></button>
-                <button class="downIcon" @click="moveDown"></button>
-            </div>
             <button class="deleteIcon" @click="deleteItem"></button>
         </div>
     </div>
+
+    <div v-else class="bubbleContainer">
+        <p v-if="show" class="timeStamp">{{stamp}}</p>
+    </div>
     `,
-    props: ['text', 'index', 'time', 'stamp', 'show'],
-    data: function() {
-        return {
-            text: this.text,
-            index: this.index,
-            time: this.time,
-            stamp: this.stamp,
-            show: this.show,
-        }
-    },
+    props: ['text', 'index', 'time', 'stamp', 'show', 'type'],
     methods: {
         deleteItem() {
             app.$emit('deleteItem', this.index)
@@ -94,11 +82,11 @@ app = new Vue({
             let stamp = dateFormat(now, "dddd, mmmm dS, h TT");
             let show = false
             if (this.lastKnowDate !== stamp) {
-                show = true
+                this.texts = immutablePush(this.texts, {message: msg, time: dateFormat(now, "hh:MM"), stamp: stamp, show: true, tpye: "header"})
                 this.lastKnowDate = stamp
             }
 
-            this.texts = immutablePush(this.texts, {message: msg, time: dateFormat(now, "hh:MM"), stamp: stamp, show: show})
+            this.texts = immutablePush(this.texts, {message: msg, time: dateFormat(now, "hh:MM"), stamp: stamp, show: false, type: "bubble"})
             console.log('this.texts', this.texts)
         });
         this.$on('deleteItem', function(index) {
