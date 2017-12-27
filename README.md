@@ -1,8 +1,8 @@
 # Minutes
-This my toy project to learn vue.js. The goal is to build an interface similar to Slack, but one which is optimized for taking meeting minutes instead of chatting.
-
-The meeting minutes, unlike usual, are not tied to a meeting but to a person or a group of people.
+This is my toy project to learn Vue.js. The goal is to build an interface similar to Slack, but one which is optimized for taking meeting minutes instead of chatting.
 
 ## Gettings started
     browserify minutes.js -o bundle.js
     open minutes.html
+
+<img width="1056" alt="screen shot 2017-12-27 at 15 03 01" src="https://user-images.githubusercontent.com/26413131/34383738-bc535306-eb17-11e7-9161-d0896c573a31.png">
