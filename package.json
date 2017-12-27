@@ -2,19 +2,19 @@
   "name": "vue-minutes",
   "version": "0.0.1",
   "description": "A vue.js note-taking app in progres",
+  "repository": "https://github.com/stefanhengl/vue-minutes.git",
   "main": "index.js",
   "dependencies": {
-    "dateformat": "^3.0.2",
-    "eslint": "^4.14.0",
-    "vue": "^2.5.3"
+    "dateformat": "^3.0.2"
   },
   "devDependencies": {
+    "eslint": "^4.14.0",
     "eslint-config-airbnb-base": "^12.1.0",
     "eslint-plugin-import": "^2.8.0"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "run": "browserify minutes.js -o bundle.js && open minutes.html"
+    "start": "browserify ./src/minutes.js -o ./build/bundle.js && open ./src/minutes.html"
   },
   "author": "stefan hengl",
   "license": "MIT"
