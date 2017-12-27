@@ -172,8 +172,8 @@ let app = new Vue({
       }
       // reset lastKnownDate if the stamp to be deleted is the last one. This way
       // we make sure that a new stamp is added when new items are submitted.
-      if (this.lastKnowDate === stamp) {
-        this.lastKnowDate = '';
+      if (this.lastKnowDate[this.selected] === stamp) {
+        this.lastKnowDate[this.selected] = '';
       }
     });
     this.$on('buttonClicked', (meeting) => {
