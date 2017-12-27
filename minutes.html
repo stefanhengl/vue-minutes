@@ -10,12 +10,20 @@
 </head>
 
 <body>
-    <div id="app" class="container">
-            <bubble v-for="(item, index) in texts" 
-                :text="item.message" :index="index" :time="item.time" 
-                :stamp="item.stamp" :type="item.type">
-            </bubble>
-            <input-field></input-field>
+    <div id="app" class="main">
+            <div class="meetingContainer">
+                    <meeting-adder></meeting-adder>
+                    <meeting-button v-for="(item, index) in meetings" :meeting="item" :index="index"></meeting-button>
+            </div>
+            <div class="container">
+                    <div class="meetingTitle">{{selected}}</div>
+                    <bubble v-for="(item, index) in texts[selected]" 
+                        :text="item.message" :index="index" :time="item.time" 
+                        :stamp="item.stamp" :type="item.type">
+                    </bubble>
+                    <input-field></input-field>
+            </div>
+           
     </div>
 </body>
 </html>

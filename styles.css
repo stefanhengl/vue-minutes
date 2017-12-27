@@ -3,8 +3,13 @@ body {
     background-size: 500px;
 }
 
+.main {
+    display: flex;
+}
+
 .container {
     display: flex;
+    position: absolute;
     flex-direction: column;
     align-items: center;
     margin-left: calc(50% - 300px);
@@ -17,18 +22,13 @@ body {
     align-items: center;
 }
 
-.deleteButton {
-    opacity: 0;
-}
-
 .bubbleButtonContainer:hover .deleteIcon{
     transition: opacity 0.3s ease-out;
     opacity: 1;
 }
 
-.bubbleButtonContainer:hover .upAndDownButtons{
-    transition: opacity 0.3s ease-out;
-    opacity: 1;
+.deleteButton {
+    opacity: 0;
 }
 
 .headerContainer {
@@ -42,6 +42,19 @@ body {
 .headerContainer:hover .deleteIcon {
     transition: opacity 0.3s ease-out;
     opacity: 1;
+}
+
+.meetingButton {
+    height: 60px;
+    width: 60px;
+    border-radius: 50%;
+    margin: 8px;
+    font-family: 'Roboto', sans-serif;
+    font-size: 14px;
+}
+
+.meetingButton:focus {
+    outline: 0px;
 }
 
 .bubble {
@@ -72,11 +85,6 @@ body {
     background: white;
     height: 4em;
     margin-right: 34px;
-}
-
-.foc {
-    background: transparent;
-    border: 1px solid darkgray;
 }
 
 .timeOfDay {
@@ -144,4 +152,41 @@ textarea {
 
 .content:focus {
     outline: 0
+}
+
+.meetingContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.meetingAdder {
+    width: 200px;
+    font-size: 16px;
+    padding: 8px;
+    margin: 8px;
+    border-radius: 10px;
+    border: none;
+    box-sizing: border-box;
+}
+
+.meetingAdder:focus {
+    outline: 0;
+}
+
+.meetingTitle {
+    font-family: 'Roboto', sans-serif;
+    font-size: 24px;
+    margin-right: 34px;
+}
+
+.meetingButtonDeleteIconContainer {
+    display: flex;
+    align-items: center;
+}
+
+.meetingButtonDeleteIconContainer:hover .deleteIcon {
+    transition: opacity 0.3s ease-out;
+    transition-delay: 1s;
+    opacity: 1;
 }
