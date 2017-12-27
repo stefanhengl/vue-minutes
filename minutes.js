@@ -2,10 +2,10 @@
 //
 // Components
 // ----------
-// bubble: a bubble hold the text the user entered
+// bubble: a bubble holds the text the user entered
 // input-field: new text is entered here
-// meeting-button: the user selects a meeting by pressing on the meeting button
-// meeting-adder: the user can add new meetings
+// meeting-button: the user selects a meeting by pressing the meeting button
+// meeting-adder: add new meetings
 //
 // Instance, event-bus
 // --------
@@ -125,10 +125,10 @@ Vue.component('meeting-adder', {
 let app = new Vue({
   el: '#app',
   data: {
-    texts: {},
     lastKnowDate: {},
     meetings: [],
     selected: '',
+    texts: {},
   },
   created() {
     this.$on('submitContent', (msg) => {
